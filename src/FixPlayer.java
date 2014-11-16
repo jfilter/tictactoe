@@ -12,7 +12,7 @@ import de.ovgu.dke.teaching.ml.tictactoe.game.Move;
  * 
  * @author Johannes Filter
  */
-public class NewPlayer implements IPlayer {
+public class FixPlayer implements IPlayer {
 	
 	private double adaptRate = 0.001;
 	private double[] weights;	
@@ -416,28 +416,35 @@ public class NewPlayer implements IPlayer {
 	public int[] makeMove(IBoard board) {
 		if(weights == null) { // initalizing.
 			weights = new double[9];
-			for(int i = 0; i < 9; i++)
-				weights[i] = 0.0;
+			weights[0] = 0;
+			weights[1] = 1.7092784021281027;
+			weights[2] = -2.6883819757441305;
+			weights[3] = -1.7634492191191449;
+			weights[4] = -0.1924649552445665;
+			weights[5] = 8.236948521098762;
+			weights[6] = -5.003354163742613;
+			weights[7] = -2.527633041571055;
+			weights[8] = -0.20747909321800015;
 		} else {
 			if(board.getMoveHistory().size() > 2){ // not in first round
-				adaptWeights(oldBoard, board);
+//				adaptWeights(oldBoard, board);
 			}
 		}
 		oldBoard = board.clone(); // used for adapting the weights
 		
-		 for(int i = 0; i<weights.length; i++){
-		 	System.out.print(weights[i] + " | ");
-		 }
-		 System.out.println();
+//		 for(int i = 0; i<weights.length; i++){
+//		 	System.out.print(weights[i] + " | ");
+//		 }
+//		 System.out.println();
 		return chooseMove(board);
 	}
 
 	public void onMatchEnds(IBoard board) {
-		if(board.getWinner().getName() == this.getName()){
-			adaptWeights(oldBoard, 100);
-		} else {
-			adaptWeights(oldBoard, -100);			
-		}
+//		if(board.getWinner().getName() == this.getName()){
+//			adaptWeights(oldBoard, 100);
+//		} else {
+//			adaptWeights(oldBoard, -100);			
+//		}
 		return;
 	}
 }
